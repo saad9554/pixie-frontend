@@ -17,28 +17,40 @@ export default function Register(props) {
   } = useForm();
   const onSubmit = async (data) => {
     try {
-      let res = await fetch("http://localhost:9192/user", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: data.firstName,
-          email: data.email,
-          mobile: data.mob_number,
-          password: data.password,
-          role: "customer",
-          address: data.address,
-          pincode: data.pincode,
-        }),
+      let res = await fetch("http://localhost:9192/user/" + data.email, {
+        method: "GET",
       });
-      // let resJson = res.json();
-      if (res.status === 200) {
-        alert("User registered. Now please login.");
-        reset();
-      } else {
-        console.log(res);
+      try {
+        let resJson = await res.json();
+        alert("User with this email already exists");
+      } catch (err) {
+        try {
+          let res2 = await fetch("http://localhost:9192/user", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: data.firstName,
+              email: data.email,
+              mobile: data.mob_number,
+              password: data.password,
+              role: "customer",
+              address: data.address,
+              pincode: data.pincode,
+            }),
+          });
+          // let resJson = res.json();
+          if (res2.status === 200) {
+            alert("User registered. Now please login.");
+            reset();
+          } else {
+            console.log(res2);
+          }
+        } catch (err2) {
+          console.log(err2);
+        }
       }
     } catch (err) {
       console.log(err);

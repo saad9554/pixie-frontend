@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
+import Form from "./Form";
 import Navigation from "./Navigation";
 import PreHeader from "./PreHeader";
 import Subscribe from "./Subscribe";
@@ -65,6 +66,18 @@ export default function PaymentHistory(props) {
               <li>
                 <b>Status:</b> {x.status}
               </li>
+              <li>
+                <b>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-toggle="modal"
+                    data-target=".bd-example-modal-lg"
+                  >
+                    Feedback
+                  </button>
+                </b>
+              </li>
             </ul>
             <hr
               style={{
@@ -79,6 +92,32 @@ export default function PaymentHistory(props) {
         ))}
       <Subscribe />
       <Footer />
+      <div
+        class="modal fade bd-example-modal-lg"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="myLargeModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Feedback</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <Form />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
